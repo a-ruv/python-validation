@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall</title>
+</head>
+<body>
+    <div class="container1">
+        <h1>Coding Dojo Wall</h1>
+        <h2>Welcome {{user.first_name}}!!!</h2>
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="container2">
+        {% for message in messages %}
+        <div>
+            <h3>{{message.sender}} :</h3>
+            <p>{{message.content}}</p>
+            <a href="/delete/message/{{message.id}}">Delete</a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container3">
+        <h2>Send a message:</h2>
+        {% for user in users %}
+            {% if user.id != session.user_id %}
+            <form action="/post" method = "POST">
+                <input type="hidden" name="sender_id" value="{{session.user_id}}">
+                <input type="hidden" name="reciever_id" value="{{user.id}}">
+                <label for="reciever_id" value="reciever_id">Message {{user.first_name}}</label>
+                <textarea name="content" cols="30" rows="3"></textarea>
+                <button>Submit</button>
+            </form>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>
